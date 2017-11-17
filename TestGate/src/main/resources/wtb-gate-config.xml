@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<WTBGateConfig>
+	
+	<!-- 吾托帮门户配置文件的常量信息。在解析xml文件过程中，使用该常量信息进行替换，将key替换为value。 -->
+	<XMLFileConstantPropeties>
+		<!-- URL前缀值。为方便xml文件中URL的变更，定义此URL前缀变量。以下所有的"#URLPrefix#"字符串均被替换为"http://testgw.wetoband.com" -->
+		<Propeties name="#URLPrefix#" value="https://wwww.wetoband.com"></Propeties>
+	</XMLFileConstantPropeties>
+	
+	<!-- 门户系统常量配置信息 -->
+	<ConstantConfig>
+		<!-- 默认使用字符集 -->
+		<DefaultCharset>UTF-8</DefaultCharset>
+		<!-- 门户系统的URL前缀，例如：https://wwww.wetoband.com，用于构建正则表达式 -->
+		<URLPrefix>#URLPrefix#</URLPrefix>
+		<!-- 门户的aid，用于请求core的接口 -->
+		<Aid>21419389378723787447</Aid>
+		<!-- 能映射到公共吾托帮部署的默认gid。只要能根据该gid的值找到对应的gid段，而且该gid段属于公共吾托帮即可。用于定向不带gid的请求，例如请求主页、登录等 -->
+		<DefaultGid4PuiblicWeb>1</DefaultGid4PuiblicWeb>
+		<!-- 请求参数中，token对应的参数名称 -->
+		<TokenParamName>token</TokenParamName>
+		<!-- 应用上下文Context对象中，记录BaseURL的属性名称 -->
+		<ContextAttributeName4BaseURL>baseUrl</ContextAttributeName4BaseURL>
+		<!-- 应用上下文Context对象中，记录BaseURL的属性值 -->
+		<ContextAttributeValue4BaseURL>#URLPrefix#/local/</ContextAttributeValue4BaseURL>
+		<!-- 系统的根URL-->
+		<RootURL>#URLPrefix#/</RootURL>
+		<!-- 系统的图标URL，tomcat服务器默认为#URLPrefix#/favicon.ico -->
+		<FaviconURL>#URLPrefix#/favicon.ico</FaviconURL>
+		<!-- 吾托帮平台默认主页URL -->
+		<IndexPageURL>#URLPrefix#/web/</IndexPageURL>
+		<!-- 系统的集群测试URL的正则模式，用于接受集群中其他服务器的请求，若本服务器状态正常则返回200状态码。一个示例应用就是响应Nginx的心跳测试。 -->
+		<ClusterTestURLPattern>#URLPrefix#/nginx/test</ClusterTestURLPattern>
+		<!-- 403页面的URI -->
+		<Page403URI>/Page403.jsp</Page403URI>
+		<!-- 404页面的URI -->
+		<Page404URI>/Page404.jsp</Page404URI>
+		<!-- 500页面的URI -->
+		<Page500URI>/Page500.jsp</Page500URI>
+	</ConstantConfig>
+	
+	
+	<!-- HttpClient连接池配置信息 -->
+	<HttpClientConnPoolConfig>
+		<!-- 各主机路由的连接数总和，上限为此常量  -->
+		<MaxTotalRouteConnection>500</MaxTotalRouteConnection>
+		<!-- 单个主机路由的连接数，上限为此常量  -->
+		<MaxSingleRouteConnection>80</MaxSingleRouteConnection>
+		<!-- 从连接池中获取连接等待的时间限制。若连接池所有连接均出租，则请求需等待，超过等待时间则拒绝服务，避免无限期等待。当值为0时表示无限等待。单位：毫秒  -->
+		<RequireConnectionTimeOut>15000</RequireConnectionTimeOut>
+		<!-- 与目标主机建立连接最多尝试的次数，即若出现连接请求失败，会尝试进行重新请求  -->
+		<BuildConnectionTringTimes>5</BuildConnectionTringTimes>
+		<!-- 与目标主机建立连接时的最大等待时间，超过这个时间目标主机不给回应，则认为目标主机无法连接，单位毫秒  -->
+		<BuildConnectionTimeOut>20000</BuildConnectionTimeOut>
+		<!-- socket的超时时间，指从站点下载页面和数据时，读取数据的最大时间间隔，超过这个时间间隔，httpClient就认为连接出了故障。跟上传下载文件大小有关联，单位毫秒  -->
+		<SocketTimeOut>600000</SocketTimeOut>
+		<!-- 默认的KeepAlive时间，即HttpClient保持连接的时间，超过该时间则会主动断开连接。单位：毫秒 -->
+		<DefaulKeepAliveTime>60000</DefaulKeepAliveTime>
+		<!-- 是否允许HttpClient处理重定向，此处设为false，让它不自动执行重定向。注意，要实现门户功能，必须禁止HttpClient的重定向功能  -->
+		<RedirectsEnable>false</RedirectsEnable>
+		<!-- HttpClient连接管理器中连接空闲时间的限制，超过该空闲时间的连接将会被回收，单位：秒  -->
+		<MaxConnectionFreeTime>100</MaxConnectionFreeTime>
+		<!-- 连接监控器任务的执行时间间隔，执行任务则会进行无效连接回收，单位：毫秒  -->
+		<RecycleConnectionTimeSpan>600000</RecycleConnectionTimeSpan>
+	</HttpClientConnPoolConfig>
+	
+	
+	
+	<!-- 代理模块配置信息 -->
+	<ProxyConfig>
+		<!-- 上传文件时临时保存路径  -->
+		<FileUploadTempDirectory>java.io.tmpdir</FileUploadTempDirectory>
+		<!-- 上传文件过程中，若文件大小大于该值，则临时写入到磁盘中，保存到上传文件临时保存路径，单位MB  -->
+		<MaxMemoryCacheFileSize>2</MaxMemoryCacheFileSize>
+		<!-- 上传文件时，单个文件限制大小，单位MB -->
+		<MaxSingleFileUploadSize>512</MaxSingleFileUploadSize>
+		<!-- 上传文件时，上传所有文件总大小被限制在该值以内，单位MB -->
+		<MaxTotalFileUploadSize>1024</MaxTotalFileUploadSize>
+		<!-- 传递响应到客户端时，读取数据的缓冲区大小，单位KB -->
+		<ResponseTransmissonBufferSize>8</ResponseTransmissonBufferSize>
+	</ProxyConfig>
+	
+	
+	<!-- 缓存模块配置信息 -->
+	<CacheConfig>
+		<!-- 权限信息缓存Map的最大记录数  -->
+		<MaxPermissionCacheSize>50000</MaxPermissionCacheSize>
+		<!-- 权限信息缓存Map达最大值，重置操作后的剩余记录数。使用老化算法重置  -->
+		<ResetPermissionCacheSize>30000</ResetPermissionCacheSize>
+		<!-- 权限信息缓存刷新任务运行的起始时间，单位：毫秒  -->
+		<PermissionCacheRefreshStartTime>120000</PermissionCacheRefreshStartTime>
+		<!-- 权限信息缓存刷新任务运行的时间间隔，单位：毫秒  -->
+		<PermissionCacheRefreshTimeSpan>120000</PermissionCacheRefreshTimeSpan>
+		<!-- gid段信息缓存刷新任务运行的起始时间，单位：毫秒  -->
+		<GidSegCacheRefreshStartTime>3600000</GidSegCacheRefreshStartTime>
+		<!-- gid段信息缓存刷新任务运行的时间间隔，单位：毫秒  -->
+		<GidSegCacheRefreshTimeSpan>3600000</GidSegCacheRefreshTimeSpan>
+	</CacheConfig>
+	
+	
+	<!-- 服务节点列表  -->
+	<SpecialNodeHostList name="WTBSpecialNodeHostList">
+	
+		<!-- 一个特殊业务节点配置的示例 -->
+		<!-- 节点的URL正则表达式模式为：^(http|https)://www.wetoband.com/example/.*，门户与节点的通信协议为http，
+			  内网地址为192.168.20.1,Web服务器端口号为8080，部署路径为/exampleProject -->
+		<!-- SpecialNodeHost pattern="^(http|https)://www.wetoband.com/example/.*" protocol="http" 
+			 hostName="192.168.20.1" port="8080" deploymentPath="/exampleProject"/ -->
+		
+		<SpecialNodeHost pattern="^#URLPrefix#/factory/.*" protocol="https" 
+					 hostName="218.16.124.114" port="9082" deploymentPath=""/>
+		<SpecialNodeHost pattern="^#URLPrefix#/shop/.*" protocol="https" 
+					 hostName="218.16.124.114" port="8084" deploymentPath=""/>
+	</SpecialNodeHostList>
+
+
+	<!-- 无需登录即可访问的URL列表 -->
+	<NeedNotLoginURLList name="WTBNeedNotLoginURLList">
+		<URL url="#URLPrefix#/"/>
+		<URL url="#URLPrefix#/favicon.ico"/>
+		<URL url="#URLPrefix#/web/login/gotoLogin"/>
+		<URL url="#URLPrefix#/web/login/userLogin"/>
+		<URL url="#URLPrefix#/web/login/identifyCode"/>
+	</NeedNotLoginURLList>
+	
+	
+	<!-- URI与操作码OpCode的对应列表 -->
+	<URIOpCodeList>
+		<URIOpCode URIPattern="/core/v4/band" method="POST" opCode="513"/>
+		<URIOpCode URIPattern="/core/v4/band/toolBand" method="POST" opCode="513"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+" method="DELETE" opCode="33"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+" method="POST" opCode="65"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/copy" method="POST" opCode="65537"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/move" method="POST" opCode="131073"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/frozen" method="POST" opCode="262145"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/thaw" method="POST" opCode="524289"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/lock" method="POST" opCode="16777217"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/unLock" method="POST" opCode="33554433"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/changeBandUser" method="POST" opCode="16385"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/bandUser" method="DELETE" opCode="16385"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/templateBand" method="PUT" opCode="513"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/invite" method="POST" opCode="513"/>
+		<URIOpCode URIPattern="/core/v4/band/\\d+/user" method="POST" opCode="16385"/>
+		<URIOpCode URIPattern="/core/v4/bandRole" method="POST" opCode="8193"/>
+		<URIOpCode URIPattern="/core/v4/bandRole/\\d+" method="DELETE" opCode="32769"/>
+		<URIOpCode URIPattern="/core/v4/bandRole/\\d+/user" method="POST" opCode="16385"/>
+		<URIOpCode URIPattern="/core/v4/bandRole/\\d+/user" method="DELETE" opCode="16385"/>
+		<URIOpCode URIPattern="/core/v4/bandRole/\\d+" method="POST" opCode="16385"/>
+		<URIOpCode URIPattern="/core/v4/bandStructureTemplet/\\d+/band" method="POST" opCode="513"/>
+		<URIOpCode URIPattern="/core/v4/chatroom" method="PUT" opCode="4097"/>
+		<URIOpCode URIPattern="/core/v4/chatroom/\\d+" method="POST" opCode="66"/>
+		<URIOpCode URIPattern="/core/v4/chatroom/\\d+" method="DELETE" opCode="34"/>
+		<URIOpCode URIPattern="/core/v4/chatroom/\\d+/invite" method="POST" opCode="4097"/>
+		<URIOpCode URIPattern="/core/v4/chatroom/invite" method="POST" opCode="4097"/>
+		<URIOpCode URIPattern="/core/v4/chatroom/\\d+/move" method="POST" opCode="2050"/>
+		<URIOpCode URIPattern="/core/v4/department/\\d+/band" method="PUT" opCode="513"/>
+		<URIOpCode URIPattern="/core/v4/department/\\d+/toolBand" method="PUT" opCode="513"/>
+		<URIOpCode URIPattern="/core/v4/department/\\d+/band" method="DELETE" opCode="33"/>
+		<URIOpCode URIPattern="/core/v4/document" method="PUT" opCode="1025"/>
+		<URIOpCode URIPattern="/core/v4/document/\\d+" method="DELETE" opCode="35"/>
+		<URIOpCode URIPattern="/core/v4/document/\\d+/copy" method="POST" opCode="8195"/>
+		<URIOpCode URIPattern="/core/v4/document/\\d+/move" method="POST" opCode="16387"/>
+		<URIOpCode URIPattern="/core/v4/document/\\d+/invite" method="POST" opCode="1025"/>
+		<URIOpCode URIPattern="/core/v4/toolLibrary/preparingRunTool" method="POST" opCode="516"/>
+		<URIOpCode URIPattern="/core/v4/toolLibrary/installTool" method="POST" opCode="2049"/>
+		<URIOpCode URIPattern="/core/v4/toolLibrary/installedTool/\\d+" method="DELETE" opCode="36"/>
+		<URIOpCode URIPattern="/core/v4/tool/\\d+/invite" method="POST" opCode="2049"/>
+	</URIOpCodeList>
+
+</WTBGateConfig>
